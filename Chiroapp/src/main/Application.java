@@ -42,7 +42,7 @@ public class Application {
                 public void run() {
                     try {
                         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                    } catch (Exception e) {
+                    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
                     }
                     fr = new JFrame("Chiro Bevere Administratie");
                     tm = new ChiroTableModel();
