@@ -64,28 +64,30 @@ public class NieuweGebruikerDialoog extends JDialog {
                 try {
                     System.out.println("test");
                     PreparedStatement tp = Application.getInstance().getConnection().prepareStatement("SELECT * FROM CH_Familie WHERE Familienaam = ?");
-                    tp.setString(1,familieNaamInput.getText());
+                    tp.setString(1, familieNaamInput.getText());
                     ResultSet rs = tp.executeQuery();
-                    System.out.println(rs.next());
-    //                try {
-    //                    PreparedStatement p = Application.getInstance().getConnection().prepareStatement("INSERT INTO CH_Lid(Voornaam, Familienaam, Afdeling, Jaar, Geboortedatum, FamilieID, LidgeldBetaald, Kamp, KampBetaald, OKPas) VALUES (?,?,?,?,?,?,?,?,?,?)");
-    //
-    //                    p.setString(1, NieuweGebruikerDialoog.this.voorNaamInput.getText());
-    //                    p.setString(2, NieuweGebruikerDialoog.this.familieNaamInput.getText());
-    //                    p.setString(3, (String) NieuweGebruikerDialoog.this.afdelingInput.getSelectedItem());
-    //                    p.setInt(4, (Integer) NieuweGebruikerDialoog.this.jaarAfdelingInput.getSelectedItem());
-    //                    p.setDate(5, NieuweGebruikerDialoog.this.convertDate(((Integer) NieuweGebruikerDialoog.this.dagInput.getSelectedItem()).intValue(), NieuweGebruikerDialoog.this.maandInput.getSelectedIndex() + 1, ((Integer) NieuweGebruikerDialoog.this.jaarInput.getSelectedItem()).intValue()));
-    //                    p.setInt(6, 1);
-    //                    p.setBoolean(7, NieuweGebruikerDialoog.this.lidGeldBetaaldInput.isSelected());
-    //                    p.setBoolean(8, NieuweGebruikerDialoog.this.gaatMeeOpKampInput.isSelected());
-    //                    p.setBoolean(9, NieuweGebruikerDialoog.this.kampBetaaldInput.isSelected());
-    //                    p.setBoolean(10, NieuweGebruikerDialoog.this.okPasInput.isSelected());
-    //                    p.execute();
-    //                    Application.getInstance().renewInfo();
-    //                    NieuweGebruikerDialoog.this.setVisible(false);
-    //                } catch (SQLException ex) {
-    //                }
-    //                }
+                    if (rs.next()) {
+                        showChooseFamily(rs);
+                    }
+                    //                try {
+                    //                    PreparedStatement p = Application.getInstance().getConnection().prepareStatement("INSERT INTO CH_Lid(Voornaam, Familienaam, Afdeling, Jaar, Geboortedatum, FamilieID, LidgeldBetaald, Kamp, KampBetaald, OKPas) VALUES (?,?,?,?,?,?,?,?,?,?)");
+                    //
+                    //                    p.setString(1, NieuweGebruikerDialoog.this.voorNaamInput.getText());
+                    //                    p.setString(2, NieuweGebruikerDialoog.this.familieNaamInput.getText());
+                    //                    p.setString(3, (String) NieuweGebruikerDialoog.this.afdelingInput.getSelectedItem());
+                    //                    p.setInt(4, (Integer) NieuweGebruikerDialoog.this.jaarAfdelingInput.getSelectedItem());
+                    //                    p.setDate(5, NieuweGebruikerDialoog.this.convertDate(((Integer) NieuweGebruikerDialoog.this.dagInput.getSelectedItem()).intValue(), NieuweGebruikerDialoog.this.maandInput.getSelectedIndex() + 1, ((Integer) NieuweGebruikerDialoog.this.jaarInput.getSelectedItem()).intValue()));
+                    //                    p.setInt(6, 1);
+                    //                    p.setBoolean(7, NieuweGebruikerDialoog.this.lidGeldBetaaldInput.isSelected());
+                    //                    p.setBoolean(8, NieuweGebruikerDialoog.this.gaatMeeOpKampInput.isSelected());
+                    //                    p.setBoolean(9, NieuweGebruikerDialoog.this.kampBetaaldInput.isSelected());
+                    //                    p.setBoolean(10, NieuweGebruikerDialoog.this.okPasInput.isSelected());
+                    //                    p.execute();
+                    //                    Application.getInstance().renewInfo();
+                    //                    NieuweGebruikerDialoog.this.setVisible(false);
+                    //                } catch (SQLException ex) {
+                    //                }
+                    //                }
                 } catch (SQLException ex) {
                     Logger.getLogger(NieuweGebruikerDialoog.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -108,5 +110,9 @@ public class NieuweGebruikerDialoog extends JDialog {
     private java.sql.Date convertDate(int dag, int maand, int jaar) {
         java.util.Date utilDate = new java.util.Date(jaar - 1900, maand, dag);
         return new java.sql.Date(utilDate.getTime());
+    }
+
+    private void showChooseFamily(ResultSet rs) {
+        KiesFamilieDialoog k = new KiesFamilieDialoog(rs);
     }
 }
