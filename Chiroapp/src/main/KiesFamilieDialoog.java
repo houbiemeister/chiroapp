@@ -1,9 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package main;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -17,15 +15,23 @@ import javax.swing.*;
 public class KiesFamilieDialoog extends JDialog {
 
     public KiesFamilieDialoog(ResultSet rs) {
+        int id;
         try {
             rs.beforeFirst();
-            JTable t = new JTable();
-            ChiroTableModel ctm = new ChiroTableModel();
+            final JTable t = new JTable();
+            final ChiroTableModel ctm = new ChiroTableModel();
             ctm.setInfo(rs);
             t.setModel(ctm);
-            JPanel p = new JPanel();
-            p.add(new JLabel("Kies familie"));
-            add(t);
+            JPanel p = new JPanel(new BorderLayout());
+            p.add(new JLabel("Kies familie"), BorderLayout.NORTH);
+            p.add(new JButton(new AbstractAction() {
+
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+//                    id = (int) ctm.getValueAt(t.getSelectedRow(), 1);
+                }
+            }), BorderLayout.SOUTH);
+            add(t, BorderLayout.CENTER);
             pack();
             setVisible(true);
         } catch (SQLException ex) {

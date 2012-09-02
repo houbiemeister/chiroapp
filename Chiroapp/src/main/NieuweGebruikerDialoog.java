@@ -21,7 +21,7 @@ public class NieuweGebruikerDialoog extends JDialog {
     private final JCheckBox gaatMeeOpKampInput;
     private final JCheckBox kampBetaaldInput;
     private final JCheckBox okPasInput;
-    private final JTextField familieInput;
+    private final JCheckBox familieInput;
     private final JComboBox jaarAfdelingInput;
 
     public NieuweGebruikerDialoog(JFrame fr) {
@@ -56,18 +56,24 @@ public class NieuweGebruikerDialoog extends JDialog {
         gaatMeeOpKampInput = new JCheckBox();
         kampBetaaldInput = new JCheckBox();
         okPasInput = new JCheckBox();
-        familieInput = new JTextField();
+        familieInput = new JCheckBox();
         JButton maakGebruiker = new JButton(new AbstractAction("Voeg gebruiker toe") {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
                 try {
-                    System.out.println("test");
-                    PreparedStatement tp = Application.getInstance().getConnection().prepareStatement("SELECT * FROM CH_Familie WHERE Familienaam = ?");
-                    tp.setString(1, familieNaamInput.getText());
-                    ResultSet rs = tp.executeQuery();
+                    ResultSet rs = null;
+                    Familie f = new Familie();
+                    if (familieInput.isSelected()) {
+                        PreparedStatement tp = Application.getInstance().getConnection().prepareStatement("SELECT * FROM CH_Familie WHERE Familienaam = ?");
+                        tp.setString(1, familieNaamInput.getText());
+                        rs = tp.executeQuery();
+                    }
                     if (rs.next()) {
                         showChooseFamily(rs);
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "Familienaam zit niet in systeem, maak een nieuwe familie aan of verbeter de familienaam");
                     }
                     //                try {
                     //                    PreparedStatement p = Application.getInstance().getConnection().prepareStatement("INSERT INTO CH_Lid(Voornaam, Familienaam, Afdeling, Jaar, Geboortedatum, FamilieID, LidgeldBetaald, Kamp, KampBetaald, OKPas) VALUES (?,?,?,?,?,?,?,?,?,?)");
