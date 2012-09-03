@@ -48,6 +48,7 @@ public class ChiroTableModel extends AbstractTableModel {
                 numberOfRows++;
                 ArrayList<Object> list = new ArrayList<>();
                 while (i < numberOfCols) {
+                    System.out.println(i);
                     list.add(set.getObject(++i));
                 }
                 i = 0;

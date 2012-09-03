@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.*;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -25,6 +26,7 @@ public class Application {
     private PreparedStatement currentQuery;
     private String[] classes;
     private Thread swt;
+    private String pw;
 
     //Singleton
     public static Application getInstance() {
@@ -36,6 +38,10 @@ public class Application {
 
     private Application() {
         try {
+
+            System.out.println("Wachtwoord:");
+            Scanner sc = new Scanner(System.in);
+            pw = sc.nextLine();
             swt = new Thread(new Runnable() {
 
                 @Override
@@ -139,8 +145,8 @@ public class Application {
                 }
             });
             SwingUtilities.invokeLater(swt);
-            //Verbinding maken
-            conn = dbConnect("jdbc:mysql://chirobevere.be/jnet1231_ledenlijst", "donothack", "thisaccount");
+            //Verbinding make
+            conn = dbConnect("jdbc:mysql://chirobevere.be/jnet1231_ledenlijst", "donothack", pw);
             //Gegevens afhalen
             PreparedStatement p = conn.prepareStatement("SELECT * FROM (CH_Lid LEFT JOIN CH_Familie ON CH_Lid.FamilieID = CH_Familie.FamilieID)");
             currentQuery = conn.prepareStatement("SELECT * FROM CH_Lid");
