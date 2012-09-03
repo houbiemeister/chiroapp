@@ -23,19 +23,30 @@ public class NieuweGebruikerDialoog extends JDialog {
     private final JCheckBox okPasInput;
     private final JCheckBox familieInput;
     private final JComboBox jaarAfdelingInput;
+    private final JLabel voorNaamLabel;
+    private final JLabel familieNaamLabel;
+    private final JLabel afdelingLabel;
+    private final JLabel jaarAfdelingLabel;
+    private final JLabel geboorteDatumLabel;
+    private final JLabel lidGeldBetaaldLabel;
+    private final JLabel gaatMeeOpKampLabel;
+    private final JLabel kampBetaaldLabel;
+    private final JLabel okPasLabel;
+    private final JLabel familieLabel;
+    private final JButton maakGebruiker;
 
     public NieuweGebruikerDialoog(JFrame fr) {
         super(fr);
-        JLabel voorNaamLabel = new JLabel("Voornaam");
-        JLabel familieNaamLabel = new JLabel("familienaam");
-        JLabel afdelingLabel = new JLabel("Afdeling");
-        JLabel jaarAfdelingLabel = new JLabel("Jaar (1e of 2e)");
-        JLabel geboorteDatumLabel = new JLabel("Geboortedatum");
-        JLabel lidGeldBetaaldLabel = new JLabel("Lidgeldbetaald");
-        JLabel gaatMeeOpKampLabel = new JLabel("Gaat mee op kamp");
-        JLabel kampBetaaldLabel = new JLabel("Kamp betaald");
-        JLabel okPasLabel = new JLabel("OK Pas");
-        JLabel familieLabel = new JLabel("Familie al in systeem");
+        voorNaamLabel = new JLabel("Voornaam");
+        familieNaamLabel = new JLabel("familienaam");
+        afdelingLabel = new JLabel("Afdeling");
+        jaarAfdelingLabel = new JLabel("Jaar (1e of 2e)");
+        geboorteDatumLabel = new JLabel("Geboortedatum");
+        lidGeldBetaaldLabel = new JLabel("Lidgeldbetaald");
+        gaatMeeOpKampLabel = new JLabel("Gaat mee op kamp");
+        kampBetaaldLabel = new JLabel("Kamp betaald");
+        okPasLabel = new JLabel("OK Pas");
+        familieLabel = new JLabel("Familie al in systeem");
         voorNaamInput = new JTextField();
         familieNaamInput = new JTextField();
         afdelingInput = new JComboBox(Application.getInstance().getClasses());
@@ -57,7 +68,7 @@ public class NieuweGebruikerDialoog extends JDialog {
         kampBetaaldInput = new JCheckBox();
         okPasInput = new JCheckBox();
         familieInput = new JCheckBox();
-        JButton maakGebruiker = new JButton(new AbstractAction("Voeg gebruiker toe") {
+        maakGebruiker = new JButton(new AbstractAction("Voeg gebruiker toe") {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -72,7 +83,80 @@ public class NieuweGebruikerDialoog extends JDialog {
                     if (rs != null && rs.next()) {
                         showChooseFamily(rs);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Familienaam zit niet in systeem, maak een nieuwe familie aan of verbeter de familienaam");
+                        JOptionPane.showMessageDialog(null, "Familienaam zit niet in systeem, maak een nieuwe familie aan");
+                        removeAll();
+                        JPanel p = new JPanel();
+                        GroupLayout layout = new GroupLayout(p);
+                        p.setLayout(layout);
+                        layout.setAutoCreateGaps(true);
+                        layout.setAutoCreateContainerGaps(true);
+                        layout.setHorizontalGroup(
+                            layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup()
+                                    .addComponent(voorNaamLabel)
+                                    .addComponent(familieNaamLabel)
+                                    .addComponent(geboorteDatumLabel)
+                                    .addComponent(afdelingLabel)
+                                    .addComponent(jaarAfdelingLabel)
+                                    .addComponent(lidGeldBetaaldLabel)
+                                    .addComponent(gaatMeeOpKampLabel)
+                                    .addComponent(kampBetaaldLabel)
+                                    .addComponent(okPasLabel)
+                                    .addComponent(familieLabel))
+                                .addGroup(layout.createParallelGroup()
+                                    .addComponent(voorNaamInput)
+                                    .addComponent(familieNaamInput)
+                                    .addComponent(afdelingInput)
+                                    .addComponent(dagInput)
+                                    .addComponent(maandInput)
+                                    .addComponent(jaarInput)
+                                    .addComponent(jaarAfdelingInput)
+                                    .addComponent(lidGeldBetaaldInput)
+                                    .addComponent(gaatMeeOpKampInput)
+                                    .addComponent(kampBetaaldInput)
+                                    .addComponent(okPasInput)
+                                    .addComponent(familieInput)
+                                    .addComponent(maakGebruiker))
+                        );
+
+                        layout.setVerticalGroup(
+                            layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup()
+                                    .addComponent(voorNaamLabel)
+                                    .addComponent(voorNaamInput))
+                                .addGroup(layout.createParallelGroup()
+                                    .addComponent(familieNaamLabel)
+                                    .addComponent(familieNaamInput))
+                                .addGroup(layout.createParallelGroup()
+                                    .addComponent(afdelingLabel)
+                                    .addComponent(afdelingInput))
+                                .addGroup(layout.createParallelGroup()
+                                    .addComponent(jaarAfdelingLabel)
+                                    .addComponent(jaarAfdelingInput))
+                                .addGroup(layout.createParallelGroup()
+                                    .addComponent(geboorteDatumLabel)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(dagInput)
+                                        .addComponent(maandInput)
+                                        .addComponent(jaarInput)))
+                                .addGroup(layout.createParallelGroup()
+                                    .addComponent(lidGeldBetaaldLabel)
+                                    .addComponent(lidGeldBetaaldInput))
+                                .addGroup(layout.createParallelGroup()
+                                    .addComponent(gaatMeeOpKampLabel)
+                                    .addComponent(gaatMeeOpKampInput))
+                                .addGroup(layout.createParallelGroup()
+                                    .addComponent(kampBetaaldLabel)
+                                    .addComponent(kampBetaaldInput))
+                                .addGroup(layout.createParallelGroup()
+                                    .addComponent(okPasLabel)
+                                    .addComponent(okPasInput))
+                                .addGroup(layout.createParallelGroup()
+                                    .addComponent(familieLabel)
+                                    .addComponent(familieInput))
+                                .addComponent(maakGebruiker));
+                    add(p);
+                    pack();
                         //                try {
                         //                    PreparedStatement p = Application.getInstance().getConnection().prepareStatement("INSERT INTO CH_Lid(Voornaam, Familienaam, Afdeling, Jaar, Geboortedatum, FamilieID, LidgeldBetaald, Kamp, KampBetaald, OKPas) VALUES (?,?,?,?,?,?,?,?,?,?)");
                         //
@@ -105,10 +189,70 @@ public class NieuweGebruikerDialoog extends JDialog {
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
         layout.setHorizontalGroup(
-                layout.createSequentialGroup().addGroup(layout.createParallelGroup().addComponent(voorNaamLabel).addComponent(familieNaamLabel).addComponent(geboorteDatumLabel).addComponent(afdelingLabel).addComponent(jaarAfdelingLabel).addComponent(lidGeldBetaaldLabel).addComponent(gaatMeeOpKampLabel).addComponent(kampBetaaldLabel).addComponent(okPasLabel).addComponent(familieLabel)).addGroup(layout.createParallelGroup().addComponent(voorNaamInput).addComponent(familieNaamInput).addComponent(afdelingInput).addComponent(dagInput).addComponent(maandInput).addComponent(jaarInput).addComponent(jaarAfdelingInput).addComponent(lidGeldBetaaldInput).addComponent(gaatMeeOpKampInput).addComponent(kampBetaaldInput).addComponent(okPasInput).addComponent(familieInput).addComponent(maakGebruiker)));
+                layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup()
+                        .addComponent(voorNaamLabel)
+                        .addComponent(familieNaamLabel)
+                        .addComponent(geboorteDatumLabel)
+                        .addComponent(afdelingLabel)
+                        .addComponent(jaarAfdelingLabel)
+                        .addComponent(lidGeldBetaaldLabel)
+                        .addComponent(gaatMeeOpKampLabel)
+                        .addComponent(kampBetaaldLabel)
+                        .addComponent(okPasLabel)
+                        .addComponent(familieLabel))
+                    .addGroup(layout.createParallelGroup()
+                        .addComponent(voorNaamInput)
+                        .addComponent(familieNaamInput)
+                        .addComponent(afdelingInput)
+                        .addComponent(dagInput)
+                        .addComponent(maandInput)
+                        .addComponent(jaarInput)
+                        .addComponent(jaarAfdelingInput)
+                        .addComponent(lidGeldBetaaldInput)
+                        .addComponent(gaatMeeOpKampInput)
+                        .addComponent(kampBetaaldInput)
+                        .addComponent(okPasInput)
+                        .addComponent(familieInput)
+                        .addComponent(maakGebruiker))
+                );
 
         layout.setVerticalGroup(
-                layout.createSequentialGroup().addGroup(layout.createParallelGroup().addComponent(voorNaamLabel).addComponent(voorNaamInput)).addGroup(layout.createParallelGroup().addComponent(familieNaamLabel).addComponent(familieNaamInput)).addGroup(layout.createParallelGroup().addComponent(afdelingLabel).addComponent(afdelingInput)).addGroup(layout.createParallelGroup().addComponent(jaarAfdelingLabel).addComponent(jaarAfdelingInput)).addGroup(layout.createParallelGroup().addComponent(geboorteDatumLabel).addGroup(layout.createSequentialGroup().addComponent(dagInput).addComponent(maandInput).addComponent(jaarInput))).addGroup(layout.createParallelGroup().addComponent(lidGeldBetaaldLabel).addComponent(lidGeldBetaaldInput)).addGroup(layout.createParallelGroup().addComponent(gaatMeeOpKampLabel).addComponent(gaatMeeOpKampInput)).addGroup(layout.createParallelGroup().addComponent(kampBetaaldLabel).addComponent(kampBetaaldInput)).addGroup(layout.createParallelGroup().addComponent(okPasLabel).addComponent(okPasInput)).addGroup(layout.createParallelGroup().addComponent(familieLabel).addComponent(familieInput)).addComponent(maakGebruiker));
+                layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup()
+                        .addComponent(voorNaamLabel)
+                        .addComponent(voorNaamInput))
+                    .addGroup(layout.createParallelGroup()
+                        .addComponent(familieNaamLabel)
+                        .addComponent(familieNaamInput))
+                    .addGroup(layout.createParallelGroup()
+                        .addComponent(afdelingLabel)
+                        .addComponent(afdelingInput))
+                    .addGroup(layout.createParallelGroup()
+                        .addComponent(jaarAfdelingLabel)
+                        .addComponent(jaarAfdelingInput))
+                    .addGroup(layout.createParallelGroup()
+                        .addComponent(geboorteDatumLabel)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(dagInput)
+                            .addComponent(maandInput)
+                            .addComponent(jaarInput)))
+                    .addGroup(layout.createParallelGroup()
+                        .addComponent(lidGeldBetaaldLabel)
+                        .addComponent(lidGeldBetaaldInput))
+                    .addGroup(layout.createParallelGroup()
+                        .addComponent(gaatMeeOpKampLabel)
+                        .addComponent(gaatMeeOpKampInput))
+                    .addGroup(layout.createParallelGroup()
+                        .addComponent(kampBetaaldLabel)
+                        .addComponent(kampBetaaldInput))
+                    .addGroup(layout.createParallelGroup()
+                        .addComponent(okPasLabel)
+                        .addComponent(okPasInput))
+                    .addGroup(layout.createParallelGroup()
+                        .addComponent(familieLabel)
+                        .addComponent(familieInput))
+                    .addComponent(maakGebruiker));
         add(p);
         pack();
     }
@@ -120,5 +264,7 @@ public class NieuweGebruikerDialoog extends JDialog {
 
     private void showChooseFamily(ResultSet rs) {
         KiesFamilieDialoog k = new KiesFamilieDialoog(rs);
+        System.out.println(
+                k.getId());
     }
 }

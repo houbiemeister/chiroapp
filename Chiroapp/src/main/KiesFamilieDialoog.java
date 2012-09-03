@@ -14,8 +14,13 @@ import javax.swing.*;
  */
 public class KiesFamilieDialoog extends JDialog {
 
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
     public KiesFamilieDialoog(ResultSet rs) {
-        int id;
         try {
             rs.beforeFirst();
             final JTable t = new JTable();
@@ -28,7 +33,7 @@ public class KiesFamilieDialoog extends JDialog {
 
                 @Override
                 public void actionPerformed(ActionEvent ae) {
-//                    id = (int) ctm.getValueAt(t.getSelectedRow(), 1);
+                    id = (int) ctm.getValueAt(t.getSelectedRow(), 1);
                 }
             }), BorderLayout.SOUTH);
             add(t, BorderLayout.CENTER);
