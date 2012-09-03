@@ -80,16 +80,31 @@ public class NieuweGebruikerDialoog extends JDialog {
                         PreparedStatement tp = Application.getInstance().getConnection().prepareStatement("SELECT * FROM CH_Familie WHERE Familienaam = ?");
                         tp.setString(1, familieNaamInput.getText());
                         rs = tp.executeQuery();
+                        if (rs != null && rs.next()) {
+                            showChooseFamily(rs);
+                        }
                     }
-                    if (rs != null && rs.next()) {
-                        showChooseFamily(rs);
-                    } else {
+                     else {
                         JOptionPane.showMessageDialog(null, "Familienaam zit niet in systeem, maak een nieuwe familie aan");
-                        
+                        jp.removeAll();
                         GroupLayout layout = new GroupLayout(jp);
                         jp.setLayout(layout);
                         layout.setAutoCreateGaps(true);
                         layout.setAutoCreateContainerGaps(true);
+                        JLabel straatLabel = new JLabel("Straat");
+                        JLabel huisnummerLabel = new JLabel("Huisnummer");
+                        JLabel stadLabel = new JLabel("Stad");
+                        JLabel postCodeLabel = new JLabel("Postcode");
+                        JLabel telefoonNummer1Label = new JLabel("Telefoonnummer #1");
+                        JLabel telefoonNummer2Label = new JLabel("Telefoonnummer #2");
+                        JLabel emailAdresLabel = new JLabel("Emailadres");
+                        JTextField straatInput = new JTextField();
+                        JTextField huisnummerInput = new JTextField();
+                        JTextField stadInput = new JTextField();
+                        JTextField postCodeInput = new JTextField();
+                        JTextField telefoonNummer1Input = new JTextField();
+                        JTextField telefoonNummer2Input = new JTextField();
+                        JTextField emailAdresInput = new JTextField();
                         layout.setHorizontalGroup(
                             layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup()
@@ -102,7 +117,13 @@ public class NieuweGebruikerDialoog extends JDialog {
                                     .addComponent(gaatMeeOpKampLabel)
                                     .addComponent(kampBetaaldLabel)
                                     .addComponent(okPasLabel)
-                                    .addComponent(familieLabel))
+                                    .addComponent(straatLabel)
+                                    .addComponent(huisnummerLabel)
+                                    .addComponent(stadLabel)
+                                    .addComponent(postCodeLabel)
+                                    .addComponent(telefoonNummer1Label)
+                                    .addComponent(telefoonNummer2Label)
+                                    .addComponent(emailAdresLabel))
                                 .addGroup(layout.createParallelGroup()
                                     .addComponent(voorNaamInput)
                                     .addComponent(familieNaamInput)
@@ -115,7 +136,13 @@ public class NieuweGebruikerDialoog extends JDialog {
                                     .addComponent(gaatMeeOpKampInput)
                                     .addComponent(kampBetaaldInput)
                                     .addComponent(okPasInput)
-                                    .addComponent(familieInput)
+                                    .addComponent(straatInput)
+                                    .addComponent(huisnummerInput)
+                                    .addComponent(stadInput)
+                                    .addComponent(postCodeInput)
+                                    .addComponent(telefoonNummer1Input)
+                                    .addComponent(telefoonNummer2Input)
+                                    .addComponent(emailAdresInput)
                                     .addComponent(maakGebruiker))
                         );
 
@@ -152,12 +179,31 @@ public class NieuweGebruikerDialoog extends JDialog {
                                     .addComponent(okPasLabel)
                                     .addComponent(okPasInput))
                                 .addGroup(layout.createParallelGroup()
-                                    .addComponent(familieLabel)
-                                    .addComponent(familieInput))
+                                    .addComponent(straatLabel)
+                                    .addComponent(straatInput))
+                                .addGroup(layout.createParallelGroup()
+                                    .addComponent(huisnummerLabel)
+                                    .addComponent(huisnummerInput))
+                                .addGroup(layout.createParallelGroup()
+                                    .addComponent(stadLabel)
+                                    .addComponent(stadInput))
+                                .addGroup(layout.createParallelGroup()
+                                    .addComponent(postCodeLabel)
+                                    .addComponent(postCodeInput))
+                                .addGroup(layout.createParallelGroup()
+                                    .addComponent(telefoonNummer1Label)
+                                    .addComponent(telefoonNummer1Input))
+                                .addGroup(layout.createParallelGroup()
+                                    .addComponent(telefoonNummer2Label)
+                                    .addComponent(telefoonNummer2Input))
+                                .addGroup(layout.createParallelGroup()
+                                    .addComponent(emailAdresLabel)
+                                    .addComponent(emailAdresInput))
                                 .addComponent(maakGebruiker));
-                        
-                        NieuweGebruikerDialoog.this.pack();
                         NieuweGebruikerDialoog.this.revalidate();
+                        NieuweGebruikerDialoog.this.repaint();
+                        NieuweGebruikerDialoog.this.pack();
+
                         //                try {
                         //                    PreparedStatement p = Application.getInstance().getConnection().prepareStatement("INSERT INTO CH_Lid(Voornaam, Familienaam, Afdeling, Jaar, Geboortedatum, FamilieID, LidgeldBetaald, Kamp, KampBetaald, OKPas) VALUES (?,?,?,?,?,?,?,?,?,?)");
                         //
