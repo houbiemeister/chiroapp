@@ -34,6 +34,7 @@ public class NieuweGebruikerDialoog extends JDialog {
     private final JLabel okPasLabel;
     private final JLabel familieLabel;
     private final JButton maakGebruiker;
+    private final JPanel jp;
 
     public NieuweGebruikerDialoog(JFrame fr) {
         super(fr);
@@ -84,10 +85,9 @@ public class NieuweGebruikerDialoog extends JDialog {
                         showChooseFamily(rs);
                     } else {
                         JOptionPane.showMessageDialog(null, "Familienaam zit niet in systeem, maak een nieuwe familie aan");
-                        removeAll();
-                        JPanel p = new JPanel();
-                        GroupLayout layout = new GroupLayout(p);
-                        p.setLayout(layout);
+                        
+                        GroupLayout layout = new GroupLayout(jp);
+                        jp.setLayout(layout);
                         layout.setAutoCreateGaps(true);
                         layout.setAutoCreateContainerGaps(true);
                         layout.setHorizontalGroup(
@@ -155,8 +155,9 @@ public class NieuweGebruikerDialoog extends JDialog {
                                     .addComponent(familieLabel)
                                     .addComponent(familieInput))
                                 .addComponent(maakGebruiker));
-                    add(p);
-                    pack();
+                        
+                        NieuweGebruikerDialoog.this.pack();
+                        NieuweGebruikerDialoog.this.revalidate();
                         //                try {
                         //                    PreparedStatement p = Application.getInstance().getConnection().prepareStatement("INSERT INTO CH_Lid(Voornaam, Familienaam, Afdeling, Jaar, Geboortedatum, FamilieID, LidgeldBetaald, Kamp, KampBetaald, OKPas) VALUES (?,?,?,?,?,?,?,?,?,?)");
                         //
@@ -183,9 +184,9 @@ public class NieuweGebruikerDialoog extends JDialog {
                 }
             }
         });
-        JPanel p = new JPanel();
-        GroupLayout layout = new GroupLayout(p);
-        p.setLayout(layout);
+        jp = new JPanel();
+        GroupLayout layout = new GroupLayout(jp);
+        jp.setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
         layout.setHorizontalGroup(
@@ -253,7 +254,7 @@ public class NieuweGebruikerDialoog extends JDialog {
                         .addComponent(familieLabel)
                         .addComponent(familieInput))
                     .addComponent(maakGebruiker));
-        add(p);
+        add(jp);
         pack();
     }
 
